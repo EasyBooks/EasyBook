@@ -1,0 +1,57 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/bookcase/bookcase",
+			"style": {
+				"navigationBarTitleText": "书架",
+				"navigationStyle": "custom",  //自定义导航栏
+				"enablePullDownRefresh": true, //设置为true表示当前页面开启下拉刷新
+				"backgroundTextStyle": "dark"
+			}
+		}, {
+			"path": "pages/bookmall/bookmall",
+			"style": {
+				"navigationBarTitleText": "书城",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "用户中心",
+				"navigationStyle": "custom"
+			}
+		}
+	    ,{
+            "path" : "pages/book/book",
+            "style" : {
+				"navigationBarTitleText": "阅读",
+				"navigationStyle": "custom"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"selectedColor": "#0F0F0F",
+		"list": [{
+			"pagePath": "pages/bookcase/bookcase",
+			"iconPath": "static/tabicon/read.png",
+			"selectedIconPath": "static/tabicon/selectedRead.png",
+			"text": "书架"
+		}, {
+			"pagePath": "pages/bookmall/bookmall",
+			"iconPath": "static/tabicon/bookmall.png",
+			"selectedIconPath": "static/tabicon/selectedBookmall.png",
+			"text": "书城"
+		}, {
+			"pagePath": "pages/mine/mine",
+			"iconPath": "static/tabicon/mine.png",
+			"selectedIconPath": "static/tabicon/selectedMine.png",
+			"text": "我的"
+		}]
+	}
+}
