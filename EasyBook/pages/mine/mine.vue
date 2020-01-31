@@ -1,8 +1,14 @@
 <template>
 	<view>
-		<uni-nav-bar>
-			<view class="title"><b>用户中心</b></view>
-		</uni-nav-bar>
+		<view class="topMenu" :style="`background-color: rgba(228, 247, 255,${transparent});`">
+			<image src="../../static/mine/setting.png" class="icon" style="margin-top: 10rpx;float: right;margin-right: 30rpx;"></image>
+		</view>
+		<view class="body">
+			<view class="mine-info" >
+				<image src="../../static/mine/unKnowUser.png" class="head-img" @tap="goLogin"></image>
+				<text style="position:relative;top: -50rpx;font-size: 28rpx;color: #C0C0C0;">您还未登录,点击头像登录</text>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -16,17 +22,53 @@
 		},
 		data() {
 			return {
-
+				transparent: 0.0
 			}
 		},
 		methods: {
-
+			goLogin(){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			}
+		},
+		onPageScroll(val) {
+			this.transparent = val.scrollTop / 100
+		},
+		mounted() {
+			
 		}
 	}
 </script>
 
 <style>
-	.title {
-		margin: auto;
+	.mine-info {
+		height: 150rpx;
+		width: 100%-20rpx;
+		margin: 0rpx 20rpx 0rpx 20rpx;
+		background-color: rgb(228, 247, 255);
+		border-radius: 20rpx;
+	}
+	.topMenu {
+		position: fixed;
+		top: 0rpx;
+		width: 100%;
+		height: 100rpx;
+	}
+
+	.body {
+		padding-top: 100rpx;
+	}
+
+	.head-img {
+		height: 100rpx;
+		width: 100rpx;
+		margin: 20rpx 40rpx;
+		border-radius: 100rpx;
+	}
+
+	.icon {
+		height: 80rpx;
+		width: 80rpx;
 	}
 </style>

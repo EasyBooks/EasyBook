@@ -4,7 +4,7 @@
 			"path": "pages/bookcase/bookcase",
 			"style": {
 				"navigationBarTitleText": "书架",
-				"navigationStyle": "custom",  //自定义导航栏
+				"navigationStyle": "custom", //自定义导航栏
 				"enablePullDownRefresh": true, //设置为true表示当前页面开启下拉刷新
 				"backgroundTextStyle": "dark"
 			}
@@ -20,18 +20,32 @@
 				"navigationBarTitleText": "用户中心",
 				"navigationStyle": "custom"
 			}
-		}
-	    ,{
-            "path" : "pages/book/book",
-            "style" : {
+		}, {
+			"path": "pages/book/book",
+			"style": {
 				"navigationBarTitleText": "阅读",
 				"navigationStyle": "custom"
 			}
-        }
-    ],
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"backgroundColor": "#f5f6f8",
+				"navigationBarTitleText": "登录"
+			}
+		}, {
+			"path": "pages/register/register",
+			"style": {}
+		},
+		{
+			"path": "pages/register/register-pwd",
+			"style": {
+
+			}
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "简阅阅读",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
