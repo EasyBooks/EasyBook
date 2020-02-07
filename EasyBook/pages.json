@@ -34,12 +34,19 @@
 			}
 		}, {
 			"path": "pages/register/register",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
 		},
 		{
 			"path": "pages/register/register-pwd",
 			"style": {
-
+				"navigationBarTitleText": "注册"
+			}
+		}, {
+			"path": "pages/find-pwd/find-pwd",
+			"style": {
+				"navigationBarTitleText": "找回密码"
 			}
 		}
 	],
