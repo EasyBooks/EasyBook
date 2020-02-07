@@ -4,9 +4,23 @@
 			<image src="../../static/mine/setting.png" class="icon" style="margin-top: 10rpx;float: right;margin-right: 30rpx;"></image>
 		</view>
 		<view class="body">
-			<view class="mine-info" >
+			<view class="mine-info">
 				<image src="../../static/mine/unKnowUser.png" class="head-img" @tap="goLogin"></image>
 				<text style="position:relative;top: -50rpx;font-size: 28rpx;color: #C0C0C0;">您还未登录,点击头像登录</text>
+			</view>
+			<view style="padding: 20rpx;">
+				<view class="view">
+					<view style="display: flex;flex-direction: row;justify-content:space-around;">
+						<view>
+							<image src="../../static/mine/sign.png" style="width: 70rpx; height: 70rpx;"></image>
+							<p style="font-size: 28rpx;text-align: center;width: 70rpx;">签到</p>
+						</view>
+						<view>
+							<image src="../../static/mine/history.png" style="width: 70rpx; height: 70rpx;"></image>
+							<p style="font-size: 28rpx;text-align: center;width: 70rpx;">历史</p>
+						</view>
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -26,9 +40,9 @@
 			}
 		},
 		methods: {
-			goLogin(){
+			goLogin() {
 				uni.navigateTo({
-					url:'../login/login'
+					url: '../login/login'
 				})
 			}
 		},
@@ -36,7 +50,7 @@
 			this.transparent = val.scrollTop / 100
 		},
 		mounted() {
-			
+
 		}
 	}
 </script>
@@ -49,11 +63,13 @@
 		background-color: rgb(228, 247, 255);
 		border-radius: 20rpx;
 	}
+
 	.topMenu {
 		position: fixed;
 		top: 0rpx;
 		width: 100%;
 		height: 100rpx;
+		z-index: 10;
 	}
 
 	.body {
@@ -70,5 +86,11 @@
 	.icon {
 		height: 80rpx;
 		width: 80rpx;
+	}
+
+	.view {
+		height: 140rpx;
+		width: 100%;
+		border-bottom: solid #F1F1F1 1rpx;
 	}
 </style>
