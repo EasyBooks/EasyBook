@@ -1,2 +1,2 @@
-# EasyBook-AppUI
-简单阅读app
+# EasyBook
+易读app
