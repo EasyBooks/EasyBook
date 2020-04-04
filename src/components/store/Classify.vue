@@ -7,23 +7,13 @@
       <Arrows class="class_arrows"/>
       <span class="class_title">分类</span>
     </header>
-    <ul class="class_container" v-if="('male' in result)">
+    <ul class="class_container">
       <div class="auto-box">
         <li class="class_main">
-          <h3>男生</h3>
           <ul class="list">
-            <router-link :to="`/theme/${book.name}`" tag="li" v-for="(book,index) in result['male']" class="item" :key="index">
-              <p>{{book.name}}</p>
-              <span>{{book.bookCount}} 本</span>
-            </router-link>
-          </ul>
-        </li>
-        <li class="class_main">
-          <h3>女生</h3>
-          <ul class="list">
-            <router-link :to="`/theme/${book.name}`" tag="li" v-for="(book,index) in result['female']" class="item  " :key="index">
-              <p>{{book.name}}</p>
-              <span>{{book.bookCount}} 本</span>
+            <router-link :to="`/theme/${type.name}`" tag="li" v-for="(type,index) in result" class="item" :key="index">
+              <p>{{type.name}}</p>
+              <span>{{type.bookCount}} 本</span>
             </router-link>
           </ul>
         </li>
@@ -33,25 +23,26 @@
 </template>
 <script>
   import Arrows from '../../base/Arrows'
-  import {getCategory} from '../../api'
-
+  import {getBanner, getCategory} from '../../api'
   export default {
     components: {Arrows},
     data() {
       return {
-        classText: {'female': '女生', 'male': '男生'},
         isLoading: true,
-        result: {}
+        result: []
       }
     },
     async created() {
-      let result = await getCategory();
-      this.result = result || {}
+     let _this=this;
+      await getCategory().then(function(response) {
+        return response.json();
+      }).then(function(json) {
+        _this.result=json.data;
+      });
       this.$nextTick(() => {
         this.isLoading = false
-      })
+      });
     }
-
   }
 </script>
 <style scoped lang="stylus">

@@ -51,7 +51,7 @@
 </template>
 <script>
   import Arrows from '../base/Arrows'
-  import {getRead, getReadContent} from "../api"
+  import {getChapter, getDetail, getRead, getReadContent} from "../api"
   import BScroll from 'better-scroll'
   import Chapter from './chapter.vue'
 
@@ -66,7 +66,6 @@
       return {
         bid: '',
         tit: '',
-        chaptersUpdated: new Date(),
         chapters: [],
         chaptersStart: 0,
         limit: 1,
@@ -96,8 +95,8 @@
           this.chaptersData = []
           this.chaptersStart = 0;
           this.content = ''
-          await this.getChapters()
-          await this.getChaptersContent()
+          await this.getChapters();
+          await this.getChaptersContent();
         }
       },
       read() {
@@ -107,10 +106,10 @@
               threshold: 80
             },
             click: true,
-          })
+          });
           this.scroll.on('pullingUp', () => {
             this.getMore()
-          })
+          });
           this.scroll.on('scroll', (pos) => {
             this.dockShow && (this.dockShow = false)
           })
@@ -120,7 +119,7 @@
     async created() {
       let {bid} = this.$route.params;
       this.bid = bid;
-      await this.getChapters()
+      await this.getChapters();
       await this.getChaptersContent()
     },
     components: {Arrows, Chapter},
@@ -130,46 +129,53 @@
           this.scroll.scrollToElement('#c-' + start, 200)
         } else {
           this.chaptersStart = start;
-          await this.getChaptersContent()
+          await this.getChaptersContent();
           this.$nextTick(() => {
             this.scroll.scrollToElement('#c-' + start, 200)
           })
         }
       },
       async getChapters() {
-        let {mixToc = {}} = await getRead(this.bid);
-        this.chapters = mixToc.chapters || [];
-        this.chaptersUpdated = new Date(mixToc.chaptersUpdated);
-        if (this.chapters.length === 0) {
-          this.content = '内容错误';
-        }
+        let _this=this;
+        await getChapter(this.bid).then(function(response) {
+          return response.json();
+        }).then(function(json) {
+          _this.chapters=json.data;
+        });
+        alert(JSON.stringify(_this.chapters))
       },
       async getChaptersContent() {
-        let _ary = this.chapters.slice(this.chaptersStart, this.chaptersStart + this.limit)
-        this.tit = _ary[0].title
-        let promiseAry = _ary.map(chapters => getReadContent(chapters.link))
-        let _result = await Promise.all(promiseAry)
-        _ary.forEach((item, index) => {
-          item.content = _result[index]['chapter']['body'] || '章节错误!'
-        })
-        this.chaptersData = this.chaptersData.concat(_ary)
-        // this.chaptersData = _ary
-
-        /*this.content += this.chaptersData.reduce((pre, cur, index) => {
-          return pre + `<h2 id="${'c-' + (this.chaptersStart + index)}">${cur.title}</h2><p>${cur.content}</p>`
-        }, '');*/
-
-        this.content = this.chaptersData.reduce((pre, cur, index) => {
-          return pre + `<h2 id="${'c-' + (index)}">${cur.title}</h2><p>${cur.content}</p>`
-        }, '')
-
-        this.chaptersStart += this.limit
-        this.$nextTick(() => {
-          this.scroll && this.scroll.refresh()
-        })
+        let _this=this;
+        await getRead(this.bid).then(function(response) {
+          return response.json();
+        }).then(function(json) {
+          _this.content=json.data.content;
+        });
+        // let _ary = this.chapters.slice(this.chaptersStart, this.chaptersStart + this.limit)
+        // this.tit = _ary[0].title;
+        // let promiseAry = _ary.map(chapters => getReadContent(chapters.link));
+        // let _result = await Promise.all(promiseAry);
+        // _ary.forEach((item, index) => {
+        //   item.content = _result[index]['chapter']['body'] || '章节错误!'
+        // });
+        // this.chaptersData = this.chaptersData.concat(_ary);
+        // // this.chaptersData = _ary
+        //
+        // /*this.content += this.chaptersData.reduce((pre, cur, index) => {
+        //   return pre + `<h2 id="${'c-' + (this.chaptersStart + index)}">${cur.title}</h2><p>${cur.content}</p>`
+        // }, '');*/
+        //
+        // this.content = this.chaptersData.reduce((pre, cur, index) => {
+        //   return pre + `<h2 id="${'c-' + (index)}">${cur.title}</h2><p>${cur.content}</p>`
+        // }, '');
+        //
+        // this.chaptersStart += this.limit;
+        // this.$nextTick(() => {
+        //   this.scroll && this.scroll.refresh()
+        // })
       },
       switchTheme(n) {
-        if (this.themeIndex === n) return
+        if (this.themeIndex === n) return;
         this.themeIndex = n
       },
       add() {
@@ -183,9 +189,9 @@
         if (this.chaptersStart > this.chapterCount) {
           return this.loadMsg = '没有更多了'
         }
-        this.loadMsg = '加载中...'
+        this.loadMsg = '加载中...';
         this.getChaptersContent().then(res => {
-          this.scroll.finishPullUp()
+          this.scroll.finishPullUp();
           this.$nextTick(() => {
             this.scroll.refresh()
           })

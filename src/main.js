@@ -9,7 +9,7 @@ Vue.use(VueLazyload, {
   error: require('./assets/image/p2.gif'),
   loading: require('./assets/image/p2.gif'),
   attempt: 1
-})
+});
 
 import '@/assets/css/public.styl'
 import '@/assets/css/reset.styl'
@@ -26,13 +26,13 @@ import 'swiper/dist/css/swiper.css'
 
 Vue.config.productionTip = false;
 // 全局 组件
-Vue.component('Loading', Loading)
-Vue.component('Tips', Tips)
-Vue.component('Scroll', Scroll)
+Vue.component('Loading', Loading);
+Vue.component('Tips', Tips);
+Vue.component('Scroll', Scroll);
 
 Vue.filter('countWan',val => {
  return (Math.round(val/10000) || 1) + '万字'
-})
+});
 
 //
 

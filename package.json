@@ -1,8 +1,8 @@
 {
-  "name": "zongheng",
+  "name": "EasyBook",
   "version": "1.0.0",
-  "description": "1403纵横中文项目",
-  "author": "1403 lzb <lzbabd@gmail.com>",
+  "description": "易读",
+  "author": "lsm",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --open",

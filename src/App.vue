@@ -15,7 +15,7 @@
 <script>
   import Bottom from './base/Bottom.vue'
 
-  let routePath = ['login', 'register', 'search','classify','details','theme','read']
+  let routePath = ['login', 'register', 'search','classify','details','theme','read'];
   export default {
     components: {Bottom},
     computed: {

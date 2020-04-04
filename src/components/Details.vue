@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="detail-bottom clearfix">
-        <span class="bottom-left"><img v-lazy="a+result.cover" alt=""></span>
+        <span class="bottom-left"><img v-lazy="result.cover" alt=""></span>
         <ul class="bottom-right">
           <li class="li_1"><h3>{{result.title}}</h3></li>
           <li class="li_2">
@@ -23,10 +23,10 @@
             <img :src="require('../assets/image/pic_right_arrows.png')" alt="">
           </li>
           <li class="li_3">
-            <i><span class="span-one">{{result.majorCate}}</span></i>
+            <i><span class="span-one">haha{{result.majorCate}}</span></i>
             <span class="span-two">{{result.wordCount | countWan}}</span>
             <span>|</span>
-            <span class="span-three">{{result.isSerial ? '连载中' : '已完结'}}</span>
+            <span class="span-three">{{result.isSerial===0 ? '连载中' : '已完结'}}</span>
           </li>
         </ul>
       </div>
@@ -35,7 +35,7 @@
       <div class="synopsis-details">
         <h3>简介目录</h3>
         <p>
-          {{result.longIntro}}
+          {{result.synopsis}}
         </p>
       </div>
       <div class="synopsis-num">
@@ -50,20 +50,20 @@
         <ul>
           <li>
             <span>本月月票</span>
-            <h2>{{rating.score || 0}}</h2>
+            <h2>{{result.collection || 0}}</h2>
           </li>
           <li>
-            <span>周推荐数</span>
-            <h2>{{rating.count|| 0}}</h2>
+            <span>点赞人数</span>
+            <h2>{{result.click|| 0}}</h2>
           </li>
           <li>
             <span>收藏人数</span>
-            <h2>{{result.latelyFollower || 0}}</h2>
+            <h2>{{result.collection || 0}}</h2>
           </li>
         </ul>
       </div>
       <div class="honor-pass clearfix">
-        <span>百度小说月票榜第<i>6</i>位</span>
+        <span>易读小说月票榜第<i>{{result.top}}</i>位</span>
         <b>支持作者</b>
       </div>
     </section>
@@ -72,35 +72,12 @@
         <h3>圈子热帖</h3>
         <span><b>进入圈子</b><img :src="require('../assets/image/speech_menu_next_normal.png')" alt=""></span>
       </div>
-      <ul class="invitation-list">
+      <ul class="invitation-list" v-for="l in result.circleList">
         <li class="list-1 clearfix">
-          <img :src="require('../assets/image/touxiang.jpg')" alt="">
-          <span>一只橘子</span></li>
-        <li class="list-2"><p>这种小白文,我也就只能快进挑好看的看了</p></li>
-        <li class="list-3"><i>1小时前</i>
-          <span><img :src="require('../assets/image/reply_item_praise_normal.png')" alt=""> <i>5</i></span>
-          <span><img :src="require('../assets/image/reply_comment_icon.png')" alt=""> <i>2</i></span>
-        </li>
-      </ul>
-      <ul class="invitation-list">
-        <li class="list-1 clearfix">
-          <img :src="require('../assets/image/touxiang.jpg')" alt="">
-          <span>一只橘子</span></li>
-        <li class="list-2">
-          <p>更新了! 更新了!</p>
-          <p>还是老时间老地点更新哦</p>
-        </li>
-        <li class="list-3"><i>1小时前</i>
-          <span><img :src="require('../assets/image/reply_item_praise_normal.png')" alt=""> <i>5</i></span>
-          <span><img :src="require('../assets/image/reply_comment_icon.png')" alt=""> <i>2</i></span>
-        </li>
-      </ul>
-      <ul class="invitation-list">
-        <li class="list-1 clearfix">
-          <img :src="require('../assets/image/touxiang.jpg')" alt="">
-          <span>一只橘子</span></li>
-        <li class="list-2"><p>这种小白文,我也就只能快进挑好看的看了</p></li>
-        <li class="list-3"><i>1小时前</i>
+          <img :src="l.headImg" alt="">
+          <span>{{l.nickname}}</span></li>
+          <li class="list-2"><p>{{l.content}}</p></li>
+          <li class="list-3"><i>1小时前</i>
           <span><img :src="require('../assets/image/reply_item_praise_normal.png')" alt=""> <i>5</i></span>
           <span><img :src="require('../assets/image/reply_comment_icon.png')" alt=""> <i>2</i></span>
         </li>
@@ -137,25 +114,23 @@
         <h3>相关推荐</h3>
       </div>
       <ul class="related-list">
-        <li><i><img :src="require('../assets/image/tongtian_book.jpeg')" alt="">
-          <span>通天道符</span></i></li>
-        <li><i><img :src="require('../assets/image/tongtian_book.jpeg')" alt="">
-          <span>通天道符</span></i></li>
-        <li><i><img :src="require('../assets/image/tongtian_book.jpeg')" alt="">
-          <span>通天道符</span></i></li>
-        <li><i><img :src="require('../assets/image/tongtian_book.jpeg')" alt="">
-          <span>通天道符</span></i></li>
+        <li v-for="l in result.related">
+          <i>
+            <img :src="l.cover" alt="">
+          <span>{{l.title}}</span>
+          </i>
+        </li>
       </ul>
     </section>
     <section class="footer">
       <div class="footer-link clearfix">
         <div>
-          <button :disabled="isCollect" @click="collectBook(result['_id'])" class="collect-btn">
+          <button :disabled="isCollect" @click="collectBook(result['id'])" class="collect-btn">
           </button>
           <button>
           </button>
         </div>
-        <router-link :to='`/read/${result._id}`'>
+        <router-link :to='`/read/${result.id}`'>
           <button class="footer-but">立即阅读</button>
         </router-link>
       </div>
@@ -164,7 +139,7 @@
 </template>
 <script>
   import Arrows from '../base/Arrows'
-  import {getDetail, isCollect, collectBook} from "../api";
+  import {getDetail, isCollect, collectBook, getBanner} from "../api";
 
   export default {
     name: 'details',
@@ -175,19 +150,18 @@
         msg: null,
         isLoading: true,
         result: {},
-        rating: {},
-        a: "http://statics.zhuishushenqi.com",
         isCollect: false
       }
     },
     async created() {
       let {bid} = this.$route.params;
-
-      let {result = {}} = await getDetail(bid);
-      this.result = result || {};
-      this.rating = result.rating || {};
-      this.isCollect = (await isCollect(bid))['includes']
-      console.log(1);
+      let _this=this;
+      await getDetail(bid).then(function(response) {
+        return response.json();
+      }).then(function(json) {
+        _this.result = json.data || {};
+        _this.isCollect = false;
+      });
       this.isLoading = false
     },
     methods: {
@@ -195,8 +169,8 @@
         collectBook(bid).then(res => {
           if (res.code === 200) {
             this.dielog = true;
-            this.msg = '加入成功'
-            this.isCollect = true
+            this.msg = '加入成功';
+            this.isCollect = true;
             setTimeout(() => {
               this.dielog = false;
             }, 1000);

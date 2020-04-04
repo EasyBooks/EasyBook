@@ -3,9 +3,16 @@ import axios,{serverAdder} from './config'
 // 请求方法
 export let getX = () => axios.get('/X');
 
-export let getBoutique = () => axios.get(serverAdder+'/api/app/book/boutique');
+export let getBoutique = () => {
+  let req = new Request(serverAdder+'/api/app/book/boutique', {method: 'GET', cache: 'reload'});
+  return fetch(req);
+}
+
 export let getRanking = () => axios.get('/book/ranking');
-export let getCategory = () => axios.get('/book/category');
+export let getCategory = () => {
+  let req = new Request(serverAdder+'/api/app/base/category', {method: 'GET', cache: 'reload'});
+  return fetch(req);
+};
 export let getTheme = o => axios.get('/book/categoryBooks', {params: o});
 
 
@@ -21,7 +28,9 @@ export let login = (username, password) => axios.post('/user/login', {
 export let getUserInfo = () => axios.get('/user/userInfo');
 
 export let getBanner = () => {
-  return axios.get(serverAdder + '/api/app/base/banner')
+  let req = new Request(serverAdder+'/api/app/base/banner', {method: 'GET', cache: 'reload'});
+  return fetch(req);
+  // return axios.get(serverAdder + '/api/app/base/banner')
 };
 
 
@@ -29,7 +38,8 @@ export let getBook = (id) => {
   return axios.get('/user/hasBookInBookshelf/:bid')
 };
 export let getDetail = id => {
-  return axios.get('/book/detail/' + id)
+  let req = new Request(serverAdder+'/api/app/book/detail/'+id, {method: 'GET', cache: 'reload'});
+  return fetch(req);
 };
 
 export let bookRack = () => {
@@ -42,17 +52,18 @@ export let getCircle = () => {
 };
 
 export let getRead = bid => {
-  return axios.get('/book/chapters/' + bid)
+  let req = new Request(serverAdder+'/api/app/book/read/'+bid, {method: 'GET', cache: 'reload'});
+  return fetch(req);
 };
-export let getChapter = _id => {
-  return axios.get('/book/chapters/' + _id)
+export let getChapter = id => {
+  let req = new Request(serverAdder+'/api/app/book/chapters/'+id, {method: 'GET', cache: 'reload'});
+  return fetch(req);
 };
 export let getReadContent = link => {
-  return axios.get('/book/chapter/content', {
-    params: {
-      link
-    }
-  })
+  let req = new Request(serverAdder+'/api/app/book/read', {method: 'GET', cache: 'reload',params:{
+      "id":link
+    }});
+  return fetch(req);
 };
 
 export let getSearch = () => {

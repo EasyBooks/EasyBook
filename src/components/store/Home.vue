@@ -11,73 +11,37 @@
             <img src="../../assets/image/icon_t03.png" alt="" class="tit_image">
             <span class="tit_i">编辑力荐</span>
           </div>
-          <router-link tag="section" :to="`/details/${book._id}`" v-for="(book,index) in recommend" class="compile_list" :key="index">
+          <router-link tag="section" :to="`/details/${book.id}`" v-for="(book,index) in recommend" class="compile_list" :key="index">
             <section class="compile_list_left">
-              <img v-lazy="'http://statics.zhuishushenqi.com'+book.cover"/>
+              <img v-lazy="''+book.cover"/>
             </section>
             <div class="compile_list_right">
               <h3>{{book.title}}</h3>
-              <div class="list_right_synopsis">{{book.longIntro}}</div>
+              <div class="list_right_synopsis">{{book.synopsis}}</div>
               <span class="author">{{book.author}}</span>
-              <span class="sign1"><i>{{book.isSerial?'连载中':'完结'}}</i></span>
-              <span class="sign2"><i>{{book.majorCate}}</i></span>
-              <span class="sign3"><i>{{book.latelyFollower | countWan}}</i></span>
+              <span class="sign1"><i>完结</i></span>
+              <span class="sign2"><i>你好</i></span>
+              <span class="sign3"><i>你好</i></span>
             </div>
           </router-link>
         </section>
         <div class="line"></div>
-        <section class="store-time store_common">
-          <div class="compile_tit tit_time_i">
-            <img src="../../assets/image/icon_t09.png" alt="" class="tit_image">
-            <span class="tit_i">限时免费</span>
-            <Time :endTime='endTime' class="time_show"></Time>
-          </div>
-          <router-link tag="section" :to="`/details/${book._id}`" v-for="book in free" class="compile_list">
-            <section class="compile_list_left">
-              <img v-lazy="'http://statics.zhuishushenqi.com'+book.cover" alt="">
-            </section>
-            <div class="compile_list_right">
-              <h3>{{book.title}}</h3>
-              <div class="list_right_synopsis">{{book.longIntro}}</div>
-              <span class="author">{{book.author}}</span>
-              <span class="sign1"><i>{{book.isSerial?'连载中':'完结'}}</i></span>
-              <span class="sign2"><i>{{book.majorCate}}</i></span>
-              <span class="sign3"><i>{{book.latelyFollower | countWan}}</i></span>
-            </div>
-          </router-link>
-        </section>
-        <div class="line"></div>
-        <section class="store_boom">
-          <div class="boom_tit">
-            <img src="../../assets/image/icon_t01.png" alt="" class="boom_image">
-            <span class="boom_i">畅销精选</span>
-          </div>
-          <ul class="boom_list">
-            <router-link tag="li" :to="`/details/${book._id}`" v-for="book in sell">
-              <img v-lazy="'http://statics.zhuishushenqi.com'+book.cover" alt="">
-              <span>{{book.author}}</span>
-            </router-link>
-          </ul>
-        </section>
-        <div class="store_image">
-          <img src="//static.zongheng.com/upload/recommend/f4/dd/f4dd054a7c05f38133485f46e4be7342.jpeg" alt="">
-        </div>
         <section class="store_man store_common">
           <div class="compile_tit">
             <img src="../../assets/image/icon_t05.png" alt="" class="tit_image">
             <i class="tit_i">男生必读</i>
           </div>
-          <router-link tag="section" :to="`/details/${book._id}`" v-for="(book) in recommend" class="compile_list">
+          <router-link tag="section" :to="`/details/${book.id}`" v-for="(book) in male" class="compile_list">
             <section class="compile_list_left">
-              <img v-lazy="'http://statics.zhuishushenqi.com'+book.cover" alt="">
+              <img v-lazy="''+book.cover" alt="">
             </section>
             <div class="compile_list_right">
               <h3>{{book.title}}</h3>
-              <div class="list_right_synopsis">{{book.longIntro}}</div>
+              <div class="list_right_synopsis">{{book.synopsis}}</div>
               <span class="author">{{book.author}}</span>
-              <span class="sign1"><i>{{book.isSerial?'连载中':'完结'}}</i></span>
-              <span class="sign2"><i>{{book.majorCate}}</i></span>
-              <span class="sign3"><i>{{book.latelyFollower | countWan}}</i></span>
+              <span class="sign1"><i>完结</i></span>
+              <span class="sign2"><i>你好</i></span>
+              <span class="sign3"><i>你好</i></span>
             </div>
           </router-link>
         </section>
@@ -87,17 +51,17 @@
             <img src="../../assets/image/icon_t06.png" alt="" class="tit_image">
             <i class="tit_i">女生必读</i>
           </div>
-          <router-link tag="section" :to="`/details/${book._id}`" v-for="(book) in female" class="compile_list">
+          <router-link tag="section" :to="`/details/${book.id}`" v-for="(book) in female" class="compile_list">
             <section class="compile_list_left">
-              <img v-lazy="'http://statics.zhuishushenqi.com'+book.cover" alt="">
+              <img v-lazy="''+book.cover" alt="">
             </section>
             <div class="compile_list_right">
               <h3>{{book.title}}</h3>
-              <div class="list_right_synopsis">{{book.longIntro}}</div>
+              <div class="list_right_synopsis">{{book.synopsis}}</div>
               <span class="author">{{book.author}}</span>
-              <span class="sign1"><i>{{book.isSerial?'连载中':'完结'}}</i></span>
-              <span class="sign2"><i>{{book.majorCate}}</i></span>
-              <span class="sign3"><i>{{book.latelyFollower | countWan}}</i></span>
+              <span class="sign1"><i>完结</i></span>
+              <span class="sign2"><i>你好</i></span>
+              <span class="sign3"><i>你好</i></span>
             </div>
           </router-link>
         </section>
@@ -108,9 +72,10 @@
             <span class="boom_i">新书速递</span>
           </div>
           <ul class="boom_list">
-            <router-link tag="li" :to="`/details/${book._id}`" v-for="book in newBook">
-              <img v-lazy="'http://statics.zhuishushenqi.com'+book.cover" alt="">
+            <router-link tag="li" :to="`/details/${book.id}`" v-for="book in newBook">
+              <img v-lazy="''+book.cover" alt="">
               <span>{{book.author}}</span>
+              <span>{{book.title}}</span>
             </router-link>
           </ul>
         </section>
@@ -129,14 +94,18 @@
   import Banner from '../../base/Banner.vue'
   import BScroll from 'better-scroll'
   import {px2rem, rem2px} from '@/assets/js/utils'
+  import {getBanner} from "../../api";
 
   export default {
     data() {
       return {
+        // 男生必读
         male: [],
+        // 女生必读
         female: [],
-        free: [],
+        // 新书
         newBook: [],
+        // 编辑力荐
         recommend: [],
         sell: [],
         isLoading: true,
@@ -179,17 +148,19 @@
     },
     methods: {
       async load() {
-        let {result = {}} = await getBoutique();
-        this.male = result.Male || [];
-        this.female = result.female || [];
-        this.free = result.free || [];
-        this.newBook = result.newBook || [];
-        this.recommend = result.recommend || [];
-        this.sell = result.sell || [];
+        let _this=this;
+        await getBoutique().then(function(response) {
+          return response.json();
+        }).then(function(result) {
+          _this.male = result.data.male || [];
+          _this.female = result.data.female || [];
+          _this.newBook = result.data.newBook || [];
+          _this.recommend = result.data.recommend || [];
+        });
         this.$nextTick(() => {
-          this.isLoading = false
+          this.isLoading = false;
           this.scroll.refresh()
-        })
+        });
       }
     }
   }

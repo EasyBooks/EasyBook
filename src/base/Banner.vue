@@ -22,8 +22,12 @@
       }
     },
     async created(){
-      let {result = []}=await getBanner();
-      this.result =result
+      let _this=this;
+      await getBanner().then(function(response) {
+        return response.json();
+      }).then(function(json) {
+        _this.result=json
+      });
     },
   };
 
