@@ -87,14 +87,14 @@
     },
     watch: {
       async $route(n, o) {
-        this.read = true
-        if (n.name !== 'read') return this.dockShow = false
+        this.read = true;
+        if (n.name !== 'read') return this.dockShow = false;
         if (n.params['bid'] !== this.bid) {
-          this.bid = n.params['bid']
-          this.tit = ''
-          this.chaptersData = []
+          this.bid = n.params['bid'];
+          this.tit = '';
+          this.chaptersData = [];
           this.chaptersStart = 0;
-          this.content = ''
+          this.content = '';
           await this.getChapters();
           await this.getChaptersContent();
         }
@@ -142,7 +142,6 @@
         }).then(function(json) {
           _this.chapters=json.data;
         });
-        alert(JSON.stringify(_this.chapters))
       },
       async getChaptersContent() {
         let _this=this;
@@ -158,13 +157,13 @@
         // _ary.forEach((item, index) => {
         //   item.content = _result[index]['chapter']['body'] || '章节错误!'
         // });
-        // this.chaptersData = this.chaptersData.concat(_ary);
-        // // this.chaptersData = _ary
-        //
-        // /*this.content += this.chaptersData.reduce((pre, cur, index) => {
-        //   return pre + `<h2 id="${'c-' + (this.chaptersStart + index)}">${cur.title}</h2><p>${cur.content}</p>`
-        // }, '');*/
-        //
+       // this.chaptersData = this.chaptersData.concat(_ary);
+        // this.chaptersData = _ary
+
+        /*this.content += this.chaptersData.reduce((pre, cur, index) => {
+          return pre + `<h2 id="${'c-' + (this.chaptersStart + index)}">${cur.title}</h2><p>${cur.content}</p>`
+        }, '');*/
+
         // this.content = this.chaptersData.reduce((pre, cur, index) => {
         //   return pre + `<h2 id="${'c-' + (index)}">${cur.title}</h2><p>${cur.content}</p>`
         // }, '');
