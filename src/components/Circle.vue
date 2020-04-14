@@ -27,7 +27,6 @@
           <button @click="handel(cir)"
                   :class="{'forum_btn':!cir.isFollow}"
           >{{cir.isFollow ? '已关注': '+ 关注'}}
-
           </button>
         </section>
         <section class="thread_box">
@@ -69,7 +68,6 @@
     methods: {
       handel(cir) {
         cir.isFollow = !cir.isFollow
-
       },
 
     },

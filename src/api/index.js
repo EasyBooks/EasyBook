@@ -30,7 +30,6 @@ export let getUserInfo = () => axios.get('/user/userInfo');
 export let getBanner = () => {
   let req = new Request(serverAdder+'/api/app/base/banner', {method: 'GET', cache: 'reload'});
   return fetch(req);
-  // return axios.get(serverAdder + '/api/app/base/banner')
 };
 
 
@@ -48,7 +47,8 @@ export let bookRack = () => {
 
 
 export let getCircle = () => {
-  return axios.get('/user/forums')
+  let req=new Request(serverAdder+'/api/app/circle/list', {method: 'GET', cache: 'reload'});
+  return fetch(req);
 };
 
 export let getRead = bid => {
