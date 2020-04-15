@@ -46,8 +46,8 @@ export let bookRack = () => {
 };
 
 
-export let getCircle = () => {
-  let req=new Request(serverAdder+'/api/app/circle/list', {method: 'GET', cache: 'reload'});
+export let getCircle = (page,size) => {
+  let req=new Request(serverAdder+'/api/app/circle/list?page='+page+"&size="+size, {method: 'GET', cache: 'reload'});
   return fetch(req);
 };
 

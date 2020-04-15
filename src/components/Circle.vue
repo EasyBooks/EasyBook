@@ -9,19 +9,19 @@
     </section>
 
     <section class="list_content">
-      <h3 class="view_tit">你可能感兴趣的圈子</h3>
+      <h3 class="view_tit">你可能感兴趣的圈子，共{{total}}条</h3>
       <section v-for="(cir,index) in result" class="forum_thread" :key="index">
         <section class="forum_box">
           <section class="forum_pic">
-            <img v-lazy="cir['imgUrl']" alt="">
+            <img v-lazy="cir.headImg" alt="">
           </section>
           <section class="forum_rb">
-            <p class="forum_name">{{cir.forumTitle}}</p>
+            <p class="forum_name">{{cir.content}}</p>
             <section class="forum_info">
-              关注
-              <span>{{cir.followerNum}}</span>
-              帖子
-              <span>{{cir.threadNum}}</span>
+              评论
+              <span>{{cir.commentNum}}</span>
+              点赞
+              <span>{{cir.likeNum}}</span>
             </section>
           </section>
           <button @click="handel(cir)"
@@ -30,8 +30,9 @@
           </button>
         </section>
         <section class="thread_box">
-          <section class="thread_name">
-           {{cir.threadTitle}}
+          <section class="thread_name" v-for="c in cir.comments">
+           {{c.nickname}}评论：{{c.content}}
+            <br><span>共{{c.replyNum}}则回复</span>
           </section>
           <section class="thread_con" v-html="cir.threadContent">
 
@@ -42,28 +43,31 @@
           </section>
         </section>
       </section>
-
-
     </section>
   </section>
 </template>
 
 <script>
   import Search from "../base/Search.vue";
-  import {getCircle} from '../api'
+  import {getBanner, getCircle} from '../api'
   export default {
     data () {
       return {
         result:[],
+        total:0,
         value:'+ 关注',
         val: -1,
         name: 'Circle',
       }
     },
      async created(){
-      let {result=[]}=await getCircle();
-      console.log(result);
-      this.result=result||[];
+      let _this=this;
+       await getCircle(1,10).then(function(response) {
+         return response.json();
+       }).then(function(json) {
+         _this.result=json.data.data;
+         _this.total=json.data.total
+       });
      },
     methods: {
       handel(cir) {
@@ -78,7 +82,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
   @import "../assets/css/public.styl";
-
   .list {
     width: 100%
     .list_header {
