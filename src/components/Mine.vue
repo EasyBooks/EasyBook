@@ -10,11 +10,12 @@
       </header>
       <main class="mine-main">
         <section class="mine-info">
-          <img class="avatar" src="../assets/image/default_user_head_photo.png" alt="">
+          <img class="avatar" v-if="isLogin" src="../assets/image/head.png" alt="">
+          <img class="avatar" v-if="!isLogin" src="../assets/image/default_user_head_photo.png" alt="">
           <a class="info-content" @click="goLogin">
             <div v-if="isLogin" class="islogin">
               <h3 class="name">
-                {{userInfo.username}}
+                {{userInfo.nickname}}
               </h3>
               <p class="count">
                 <span>月票<b>{{0}}</b></span>
@@ -140,17 +141,25 @@
   </div>
 </template>
 <script>
-  import {logout, getUserInfo} from '@/api'
+  import {logout} from '@/api'
 
   export default {
     name: 'mine',
     async created() {
-      let result = await getUserInfo()
-      this.isLogin = result.code === 200
-      this.userInfo = result['result']
+      this.token=this.$store.state.token;
+      if(this.token===""||this.token===undefined){
+        this.isLogin=false;
+      }else{
+        this.isLogin=true;
+        this.userInfo=this.$store.state.userInfo;
+        if(this.userInfo.headImg===''||this.userInfo.headImg===undefined){
+          this.userInfo.headImg="../assets/image/head.png";
+        }
+      }
     },
     data() {
       return {
+        token:"",
         isLogin: false,
         isLoading: false,
         userInfo: {},
@@ -166,28 +175,15 @@
       },
       logout() {
         this.isLoading = true;
-        logout().then(res => {
-          if (res.code === 200) {
-            this.isLoading = false;
-            this.dielog = true;
-            this.msg = '退出成功'
-            setTimeout(() => {
-
-              this.isLogin = false
-              this.userInfo = {}
-              this.dielog = false;
-            }, 1000);
-            return
-          }
-          this.dielog = true;
-          this.msg = '退出失败'
-          setTimeout(() => {
+        this.dielog = true;
+        this.msg = '退出成功';
+        setTimeout(() => {
+            this.$store.state.token="";
+            this.isLogin = false
+            this.$store.state.userInfo={};
             this.dielog = false;
-          }, 1000);
-        }).catch(e => {
-          this.isLoading = false;
-          debugger
-        })
+            this.isLoading = false;
+        }, 500);
       }
     }
   }

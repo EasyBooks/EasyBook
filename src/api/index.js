@@ -18,13 +18,34 @@ export let getTheme = o => axios.get('/book/categoryBooks', {params: o});
 
 // user 方法
 export let isLogin = () => axios.get('/user/isLogin');
-export let register = (username, password) => axios.post('/user/register', {
-  username, password
-});
+
+export let login = (data) => {
+  let req = new Request(serverAdder+'/api/v1/user/login', {
+    method: 'POST',
+    cache: 'reload',
+    body: data
+  });
+  return fetch(req);
+};
+
+export let register = (data) => {
+  let req = new Request(serverAdder+'/api/v1/user/register', {
+    method: 'POST',
+    cache: 'reload',
+    headers:{
+      "Content-Type":"application/json",
+    },
+    body: JSON.stringify(data)
+  });
+  return fetch(req);
+};
+
+
+// export let register = (username, password,nickname) => axios.post('api/v1/user/register', {
+//   username, password,nickname
+// });
 export let logout = () => axios.get('/user/logout');
-export let login = (username, password) => axios.post('/user/login', {
-  username, password
-});
+
 export let getUserInfo = () => axios.get('/user/userInfo');
 
 export let getBanner = () => {

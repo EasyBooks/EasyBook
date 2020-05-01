@@ -15,6 +15,9 @@
         <h2>注册</h2>
         <div class="form">
           <div class="input-box">
+            <input type="text" placeholder="请输入昵称" v-model.trim="nickname">
+          </div>
+          <div class="input-box">
             <input type="text" placeholder="请输入账号" v-model.trim="username">
           </div>
           <div class="input-box">
@@ -37,19 +40,21 @@
   </div>
 </template>
 <script>
-  import md5 from 'blueimp-md5'
   import {register} from '@/api'
-  import {validatPassword, validatUsername} from '@/assets/js/validat'
 
   export default {
     name: 'register',
     computed: {
       registerBtn() {
-        return !validatPassword(this.password).valida || !validatUsername(this.username).valida
+        if(this.nickname.length<5||this.nickname.length<3||this.password.length<5){
+            return true;
+        }
+        return false;
       }
     },
     data() {
       return {
+        nickname:"",
         username: '',
         password: '',
         tips: '',
@@ -61,33 +66,14 @@
       }
     },
     methods: {
-      register(e) {
-        this.isLoading = true;
-        register(this.username, md5(this.password, '1403'))
-          .then(res => {
-            this.isLoading = false;
-            let msg = ''
-            switch (res.code) {
-              case 400:
-                msg = '用户名已存在!';
-                break;
-              case 200:
-                this.msg = '注册成功'
-                this.dielog = true
-                setTimeout(() => {
-                  this.dielog = false
-                  this.$router.push('/login')
-                },1500);
-                return
-              default:
-                msg = '未知错误'
-                break;
-            }
-            this.tips = msg
-          }).catch(e => {
-          this.isLoading = false;
-          this.tips = '未知错误!'
-        })
+      register(){
+        let data={"username":this.username,"password":this.password,"nickname":this.nickname};
+        register(data).then(function(response) {
+                            return response.json();
+                          }).then(function(json) {
+                            alert(json.info);
+                            this.isLoading=false;
+                          });
       },
       countdown(){
         this.codeValue = '30s';

@@ -35,15 +35,17 @@
   </div>
 </template>
 <script>
-  import md5 from 'blueimp-md5'
   import {login} from '@/api'
-  import {validatUsername, validatPassword} from '@/assets/js/validat'
+  import {WebSocketAPI} from "../api/websocket"
 
   export default {
     name: 'login',
     computed: {
       loginBtn() {
-        return !validatPassword(this.password).valida || !validatUsername(this.username).valida
+        if(this.password.length<6||this.username.length<5){
+          return true;
+        }
+        return false;
       }
     },
     data() {
@@ -55,32 +57,27 @@
       }
     },
     methods: {
-      login(e) {
+      login() {
         this.isLoading = true;
-        login(this.username, md5(this.password, '1403'))
-          .then(res => {
-            this.isLoading = false;
-            let msg = ''
-            switch (res.code) {
-              case 401:
-                return this.$router.push('/mine')
-              case 402:
-                msg = '用户名未注册';
-                break;
-              case 400:
-                msg = '用户名或密码错误!';
-                break;
-              case 200:
-                return this.$router.push('/mine')
-              default:
-                msg = '未知错误'
-                break;
-            }
-            this.tips = msg
-          }).catch(e => {
-          this.isLoading = false;
-          this.tips = '未知错误!'
-        })
+        let formData = new FormData();
+        formData.append("name",this.username);
+        formData.append("pass",this.password);
+        let _this=this;
+        login(formData).then(function(response) {
+          return response.json();
+        }).then(function(json) {
+          _this.isLoading=false;
+          if(json.code===0){
+            // json.token;
+            _this.$store.state.token=json.data.token;
+            _this.$store.state.userInfo=json.data.data;
+            _this.$router.push('/mine');
+            WebSocketAPI.connect(json.data.token);
+          }else
+          {
+            alert("登录失败，账户或者密码错误！")
+          }
+        });
       }
     }
   }
